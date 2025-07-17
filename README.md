@@ -64,24 +64,43 @@ If you have Go installed, you can build and run the application directly.
 
 ### Docker Usage
 
-To use the GDELT Downloader with Docker:
+You can either build the Docker image yourself or pull it from GitHub Container Registry (GHCR).
 
-1.  **Build the Docker Image**:
+#### Pulling from GitHub Container Registry (GHCR)
+
+```bash
+docker pull ghcr.io/sudo-ivan/gdelt-downloader:latest
+```
+
+#### Building the Docker Image (Optional)
+
+If you prefer to build the image locally:
+
+```bash
+docker build -t gdelt-downloader .
+```
+
+#### Running the Docker Container
+
+Before running, ensure your `gdelt_data` directory has the correct permissions for the container's user (UID/GID 65532, common for Chainguard images):
+
+```bash
+mkdir -p gdelt_data
+sudo chown -R 65532:65532 gdelt_data
+```
+
+Now, run the container. Replace `gdelt-downloader` with `ghcr.io/sudo-ivan/gdelt-downloader:latest` if you pulled the image from GHCR.
+
+-   **Default (download files)**:
     ```bash
-    docker build -t gdelt-downloader .
+    docker run --rm -v "./gdelt_data:/gdelt_data" gdelt-downloader
     ```
-
-2.  **Run the Docker Container**:
-    -   **Default (download files)**:
-        ```bash
-        docker run --rm -v "$(pwd)/gdelt_data:/gdelt_data" gdelt-downloader
-        ```
-    -   **Unzip all downloaded files**:
-        ```bash
-        docker run --rm -v "$(pwd)/gdelt_data:/gdelt_data" gdelt-downloader --unzip
-        ```
-    -   **Check for new files (without downloading)**:
-        ```bash
-        docker run --rm -v "$(pwd)/gdelt_data:/gdelt_data" gdelt-downloader --check-new
-        ```
-    The `-v "$(pwd)/gdelt_data:/gdelt_data"` flag mounts the local `gdelt_data` directory into the container, allowing downloaded files to persist on your host machine.
+-   **Unzip all downloaded files**:
+    ```bash
+    docker run --rm -v "./gdelt_data:/gdelt_data" gdelt-downloader --unzip
+    ```
+-   **Check for new files (without downloading)**:
+    ```bash
+    docker run --rm -v "./gdelt_data:/gdelt_data" gdelt-downloader --check-new
+    ```
+The `-v "./gdelt_data:/gdelt_data"` flag mounts the local `gdelt_data` directory into the container, allowing downloaded files to persist on your host machine.
