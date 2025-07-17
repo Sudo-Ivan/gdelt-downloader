@@ -93,14 +93,16 @@ Now, run the container. Replace `gdelt-downloader` with `ghcr.io/sudo-ivan/gdelt
 
 -   **Default (download files)**:
     ```bash
-    docker run --rm -v "./gdelt_data:/gdelt_data" gdelt-downloader
+    docker run --rm -v "./gdelt_data:/gdelt_data" ghcr.io/sudo-ivan/gdelt-downloader:latest
     ```
 -   **Unzip all downloaded files**:
     ```bash
-    docker run --rm -v "./gdelt_data:/gdelt_data" gdelt-downloader --unzip
+    docker run --rm -v "./gdelt_data:/gdelt_data" ghcr.io/sudo-ivan/gdelt-downloader:latest --unzip
     ```
 -   **Check for new files (without downloading)**:
     ```bash
-    docker run --rm -v "./gdelt_data:/gdelt_data" gdelt-downloader --check-new
+    docker run --rm -v "./gdelt_data:/gdelt_data" ghcr.io/sudo-ivan/gdelt-downloader:latest --check-new
     ```
 The `-v "./gdelt_data:/gdelt_data"` flag mounts the local `gdelt_data` directory into the container, allowing downloaded files to persist on your host machine.
+
+After downloading change permissions to `$USER:$USER` or your user to access the files. 
