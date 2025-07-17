@@ -11,20 +11,77 @@ Download GDELT data with file integrity checks, and options to unzip files or ch
 
 ## Usage
 
-1.  **Build**:
+### Download Binaries from Releases
+
+You can download pre-compiled binaries for your operating system directly from the [GitHub Releases page](https://github.com/Sudo-Ivan/gdelt-downloader/releases). This is the quickest way to get started without needing to install Go or Docker.
+
+### Go Installation and Usage
+
+If you have Go installed, you can build and run the application directly.
+
+1.  **Install the executable (recommended)**:
+    ```bash
+    go install github.com/Sudo-Ivan/gdelt-downloader@latest
+    ```
+    This will install the `gdelt-downloader` executable in your `$GOPATH/bin` directory (or `$HOME/go/bin` if `GOPATH` is not set). Make sure this directory is in your system's `PATH`.
+
+2.  **Manual Build and Run**:
+    Alternatively, you can build and run the application from the source code:
     ```bash
     go build -o gdelt-downloader main.go
+    ./gdelt-downloader
+    ```
+    Or run directly:
+    ```bash
+    go run main.go
     ```
 
-2.  **Run the downloader**:
+    **Command-line Flags**:
     -   **Default (download files)**:
         ```bash
         ./gdelt-downloader
+        ```
+        or
+        ```bash
+        go run main.go
         ```
     -   **Unzip all downloaded files**:
         ```bash
         ./gdelt-downloader --unzip
         ```
+        or
+        ```bash
+        go run main.go --unzip
+        ```
     -   **Check for new files (without downloading)**:
         ```bash
         ./gdelt-downloader --check-new
+        ```
+        or
+        ```bash
+        go run main.go --check-new
+        ```
+
+### Docker Usage
+
+To use the GDELT Downloader with Docker:
+
+1.  **Build the Docker Image**:
+    ```bash
+    docker build -t gdelt-downloader .
+    ```
+
+2.  **Run the Docker Container**:
+    -   **Default (download files)**:
+        ```bash
+        docker run --rm -v "$(pwd)/gdelt_data:/gdelt_data" gdelt-downloader
+        ```
+    -   **Unzip all downloaded files**:
+        ```bash
+        docker run --rm -v "$(pwd)/gdelt_data:/gdelt_data" gdelt-downloader --unzip
+        ```
+    -   **Check for new files (without downloading)**:
+        ```bash
+        docker run --rm -v "$(pwd)/gdelt_data:/gdelt_data" gdelt-downloader --check-new
+        ```
+    The `-v "$(pwd)/gdelt_data:/gdelt_data"` flag mounts the local `gdelt_data` directory into the container, allowing downloaded files to persist on your host machine.
