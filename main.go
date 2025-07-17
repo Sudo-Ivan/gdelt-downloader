@@ -40,7 +40,7 @@ func main() {
 			fmt.Printf("Error unzipping files: %v\n", err)
 		}
 		fmt.Println("Unzipping complete.")
-		return 
+		return
 	}
 
 	if err := os.MkdirAll(downloadDir, 0700); err != nil { // #nosec G301
@@ -72,7 +72,7 @@ func main() {
 		} else {
 			fmt.Printf("%d new files found.\n", newFilesCount)
 		}
-		return 
+		return
 	}
 
 	var wg sync.WaitGroup
